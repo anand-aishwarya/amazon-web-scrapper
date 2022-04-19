@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: csv-parser-deply
+spec:
+  selector:
+    matchLabels:
+      app: csv-parser-deply
+  template:
+    metadata:
+      labels:
+        app: csv-parser-deply
+    spec:
+      containers:
+      - name: csv-parser
+        imagePullPolicy: Never
+        image: csv-parser
+        resources: {}
+        ports:
+        - containerPort: 8088
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: csv-parser-srv
+spec:
+  selector:
+    app: csv-parser-deply
+  ports:
+    - port: 8088
+      targetPort: 8088
+  type: LoadBalancer
+
