@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: csv-picker-deply
+spec:
+  selector:
+    matchLabels:
+      app: csv-picker-deply
+  template:
+    metadata:
+      labels:
+        app: csv-picker-deply
+    spec:
+      containers:
+      - name: csv-picker
+        imagePullPolicy: Never
+        image: csv-picker
+        resources: {}
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: csv-picker-srv
+spec:
+  selector:
+    app: csv-picker-deply
+  ports:
+    - port: 8080
+      targetPort: 8080
+  type: LoadBalancer
+
